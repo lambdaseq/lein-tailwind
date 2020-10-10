@@ -4,7 +4,7 @@ A Leiningen plugin for [Tailwind CSS](https://tailwindcss.com/)
 
 ## Usage
 
-Put `[lein-tailwind "0.1.0-SNAPSHOT"]` into the `:plugins` vector of your project.clj.
+Put `[lein-tailwind "0.1.0"]` into the `:plugins` vector of your project.clj.
 
 You can generate the `tailwind.config.js` file by running
 
