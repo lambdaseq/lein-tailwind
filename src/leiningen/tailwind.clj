@@ -9,7 +9,7 @@
 (defn- init []
   (prn "Initializing Tailwindcss")
   (let [cmd "npx tailwindcss init"]
-    (apply shell/sh cmd)))
+    (apply shell/sh (clojure.string/split cmd #"\s+"))))
 
 (defn- abort [s]
   (println s)
@@ -18,7 +18,7 @@
 (defn- build-style [tailwind-dir output-dir tailwind-config {:keys [src dst]}]
   (let [cmd (->> ["npx tailwindcss build" (str tailwind-dir "/" src) "-o" (str output-dir "/" dst) "-c" tailwind-config]
                  (clojure.string/join " "))]
-    (apply shell/sh cmd)))
+    (apply shell/sh (clojure.string/split cmd #"\s+"))))
 
 (defn- build [project]
   (let [config (:tailwind project)
