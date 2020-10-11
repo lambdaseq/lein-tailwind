@@ -18,9 +18,11 @@
 (defn- build-style [tailwind-dir output-dir tailwind-config {:keys [src dst]}]
   (let [cmd (->> ["npx tailwindcss build" (str tailwind-dir "/" src) "-o" (str output-dir "/" dst) "-c" tailwind-config]
                  (clojure.string/join " "))]
+    (prn "Building Tailwind stylesheet: " cmd)
     (apply shell/sh (clojure.string/split cmd #"\s+"))))
 
 (defn- build [project]
+  (prn "Building Tailwind stylesheets")
   (let [config (:tailwind project)
         {:keys [tailwind-dir output-dir tailwind-config styles]
          :or   {tailwind-config "tailwind.config.js"}} config]
@@ -28,9 +30,12 @@
       (build-style tailwind-dir output-dir tailwind-config style))))
 
 (defn- clean-style [output-dir {:keys [dst]}]
-  (fs/delete (str output-dir "/" dst)))
+  (let [path (str output-dir "/" dst)]
+    (prn "Cleaning Tailwind stylesheet: " path)
+    (fs/delete path)))
 
 (defn- clean [project]
+  (prn "Cleaning Tailwind stylesheets")
   (let [config (:tailwind project)
         {:keys [output-dir styles]} config]
     (doseq [style styles]
